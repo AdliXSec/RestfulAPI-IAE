@@ -33,7 +33,7 @@ class StudentController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return new StudentResource(null, "failed", $validator->errors());
+            return (new StudentResource(null, "failed", $validator->errors()))->response()->setStatusCode(422);
         }
 
         $student = Student::create($request->all());
@@ -50,7 +50,7 @@ class StudentController extends Controller
         if ($student) {
             return new StudentResource($student, 'success', 'Data Berhasil Diambil');
         } else {
-            return new StudentResource(null, "failed", "data tidak ditemukan");
+            return (new StudentResource(null, "failed", "data tidak ditemukan"))->response()->setStatusCode(404);
         }
     }
 
@@ -65,7 +65,7 @@ class StudentController extends Controller
             $student->update($request->all());
             return new StudentResource($student, 'success', 'Data Berhasil Diupdate');
         } else {
-            return new StudentResource(null, "failed", "data tidak ditemukan");
+            return (new StudentResource(null, "failed", "data tidak ditemukan"))->response()->setStatusCode(404);
         }
     }
 
@@ -80,7 +80,7 @@ class StudentController extends Controller
             $student->delete();
             return new StudentResource($student, 'success', 'Data Berhasil Dihapus');
         } else {
-            return new StudentResource(null, "failed", "data tidak ditemukan");
+            return (new StudentResource(null, "failed", "data tidak ditemukan"))->response()->setStatusCode(404);
         }
     }
 }
